@@ -1,0 +1,17 @@
+<h1><検索結果></h1>
+<% if @rests.nil? %>
+  <h1>検索結果がありませんでした</h1>
+<% else %>
+  <% @rests.each do |rest| %>
+  <ul>
+    <li><%= link_to rest["name"], show_path(rest: rest), class: 'link-to' %>
+    |  
+    <% if Saving.find_by(name: rest["name"], address: rest["address"]) %>
+      <%= link_to "🌟", save_path(name: rest["name"], address: rest["address"]), method: :delete, class: 'link-to' %>
+    <% else %>
+      <%= link_to "☆", save_path(content: rest, name: rest["name"], address: rest["address"]), method: :post, class: 'link-to' %>
+    <% end %>
+    </li>
+  </ul>
+  <% end %>
+<% end %>

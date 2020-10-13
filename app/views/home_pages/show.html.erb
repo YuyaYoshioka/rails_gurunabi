@@ -1,0 +1,71 @@
+<h1><%= @rest["name"] %></h1>
+<div class="container">
+  <button type="button" class="btn btn-primary mt-5" data-toggle="modal" data-target="#post">口コミを投稿する</button>
+  <div class="modal fade" id="post" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <%= form_for(@assessment, url: comment_path, method: :post) do |f| %>
+            <%= f.hidden_field :restaurant, :value => @rest %>
+            <%= f.hidden_field :name, :value => @rest["name"] %>
+            <%= f.hidden_field :address, :value => @rest["address"] %>
+
+            <body>
+            <script src="assets/jquery.raty.js"></script>
+            <div id="star"></div>
+            <%= yield %>
+          </body>
+
+            <%= f.label :content, "コメント" %>
+            <%= f.text_area :content %>
+
+            <%= f.submit "投稿する" %>
+          <% end %>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  function initMap() {
+
+    var test ={lat: <%= @rest["latitude"] %>, lng: <%= @rest["longitude"] %>};
+    var map = new google.maps.Map(document.getElementById('map'), {
+              zoom: 15, 
+              center: test
+              });
+    var transitLayer = new google.maps.TransitLayer();
+    transitLayer.setMap(map);
+
+    var contentString = '住所：<%= @rest["address"] %>';
+    var infowindow = new google.maps.InfoWindow({
+      content: contentString
+    });
+
+
+    var marker = new google.maps.Marker({
+                  position:test,
+                  map: map,
+                  title: contentString
+                 });
+
+     marker.addListener('click', function() {
+       infowindow.open(map, marker);
+     });
+  }
+</script>
+
+<script async defer
+              src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyC98fcGifp2ockzuDOS7X2aehIzS1LWU40&callback=initMap">
+</script>
+
+<style type="text/css">
+  #map { height: 300px;
+         width: 300px;}
+</style>
+
+
+<div id="map"></div>

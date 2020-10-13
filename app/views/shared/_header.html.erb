@@ -1,0 +1,18 @@
+<header>
+  <div class="bar-left">
+    <div class="logo">
+      <%= link_to "食べナビ", root_path, class: 'link-to' %>
+    </div> 
+    <ul>
+      <% if user_signed_in? %>
+        <li><%= link_to current_user.username, edit_user_registration_path, class: 'link-to' %></li>
+        <li><%= link_to "お気に入り", saving_list_path, class: 'link-to' %></li>
+        <li><%= link_to "投稿一覧", assessment_list_path, class: 'link-to' %></li>
+        <li><%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: 'link-to' %></li>
+      <% else %>
+        <li><%= link_to "新規会員登録", new_user_registration_path, class: 'link-to' %></li>
+        <li><%= link_to "ログイン", new_user_session_path, class: 'link-to' %></li>
+      <% end %>
+    </ul>
+  </div>
+</header>

@@ -1,0 +1,8 @@
+<h1><お気に入り></h1>
+<% if @savings.length == 0 %>
+  <p>お気に入りに登録されていません</p>
+<% else %>
+  <% @savings.each do |saving| %>
+      <li><%= saving.name %></li>
+  <% end %>
+<% end %>
