@@ -2,17 +2,5 @@
 <% if @assessments.length == 0 %>
   <p>投稿がありません</p>
 <% else %>
-  <% @assessments.each do |assessment| %>
-    <ol>
-      <h1><%= assessment.name %></h1>
-      <li><%= assessment.content %></li>
-
-      <body>
-        <div id="id_info" data-json="<%= assessment.id.to_json %>" ></div>
-        <div id="tag_info" data-json="<%= assessment.star.to_json %>" ></div>
-        <script src="assets/jquery.raty.js"></script>
-        <div id="star-rate-<%= assessment.id %>"></div>
-      </body>
-    </ol>
-  <% end %>
+  <%= render 'assessment_index_else' %>
 <% end %>
